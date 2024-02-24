@@ -7,32 +7,34 @@ Original file is located at
     https://colab.research.google.com/drive/12L-2jUx0iufW0QOpYy0uMTNwU9XEExWg
 """
 
-#Task3
+#task3
+input_file = open("/content/drive/MyDrive/bracU/5th semester/CSE221/LAB/Lab02/input3.txt","r")
+output_file =open("/content/drive/MyDrive/bracU/5th semester/CSE221/LAB/Lab02/output3.txt","w")
+T= int(input_file.readline())
+start =[]
+end = []
+task = []
+count=0
+current =0
+for line in input_file:
+  temp = line.split()
+  start.append(int(temp[0]))
+  end.append(int(temp[1]))
 
-input_file = open("/content/drive/MyDrive/bracU/5th semester/CSE221/LAB/result/input3","r")
-output_file =open("/content/drive/MyDrive/bracU/5th semester/CSE221/LAB/result/output3","w")
-num = input_file.readline()
-T = int(num)
-if  1 <= T <= 1000:
-  id = input_file.readline().split()
-  marks =input_file.readline().split()
+for i in range(T):
+  for j in range(i+1,T):
+    if end[i] > end[j] :
+      end[i],end[j] =end[j],end[i]
+      start[i],start[j]=start[j],start[i]
 
-def selectionsort(Id , Marks, T):
+for i in range(T):
+  if start[i] >=current :
+    count+=1
+    current = end[i]
+    task.append((start[i],end[i]))
 
-
-  for i in range (T):
-    idx = i
-    for j in range(i+1,T):
-      if Marks[idx] < Marks[j] or (Marks[idx] == Marks[j] and Id[idx] > Id[j]):
-        idx = j
-    Marks[idx],Marks[i] = Marks[i],Marks[idx]
-    Id[idx],Id[i]= Id[i],Id[idx]
-
-  for k in range(T):
-        output_file.write(f'ID: {Id[k]} Marks: {Marks[k]}\n')
-
-  return
-
-selectionsort(id , marks, T)
+output_file.write(f'{count}\n')
+for i in task:
+  output_file.write(f'{i[0]}  {i[1]}\n')
 input_file.close()
 output_file.close()
